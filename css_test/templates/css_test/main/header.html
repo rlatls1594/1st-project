@@ -1,0 +1,36 @@
+{# css_test/templates/css_test/main/header.html #}
+{% load static %}
+
+<header class="site-header">
+    <div class="container">
+        <div class="site-title">
+            <a href="{% url 'css_test:index' %}">잔잔한 호수</a>
+        </div>
+        <nav class="main-navigation">
+            <button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+            <ul class="menu">
+                <li class="menu-item"><a href="{% url 'css_test:index' %}">문화공간</a></li>
+                <li class="menu-item"><a href="#">전시/행사</a></li>
+                <li class="menu-item"><a href="#">커뮤니티</a></li>
+                <li class="menu-item"><a href="{% url 'css_test:mypage' %}">마이페이지</a></li>
+
+                {% if user.is_authenticated %}
+                    {# 사용자가 로그인 했을 때 보일 항목들 #}
+                    <li class="menu-item">
+                        {# --- 이 부분을 아래와 같이 수정합니다 --- #}
+                        <form action="{% url 'css_test:logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            {# 버튼에 'menu-item-link' 클래스를 추가하고, 필요하다면 'menu-item' 클래스도 추가하여 기존 <a> 태그와 동일하게 보이도록 CSS로 조절합니다. #}
+                            <button type="submit" class="menu-item-link">로그아웃</button>
+                        </form>
+                        {# --- 수정 끝 --- #}
+                    </li>
+                    <li class="menu-item"><a href="{% url 'css_test:mypage' %}">내 정보</a></li>
+                {% else %}
+                    {# 사용자가 로그인하지 않았을 때 보일 항목들 #}
+                    <li class="menu-item current-menu-item"><a href="{% url 'css_test:login' %}">로그인/회원가입</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>

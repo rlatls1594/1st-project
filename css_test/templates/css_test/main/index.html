@@ -1,0 +1,28 @@
+{# css_test/templates/css_test/main/index.html #}
+
+{% extends 'css_test/main/base.html' %}
+{% load static %}
+
+{% block title %}메인 페이지{% endblock %}
+
+{% block content %}
+<main class="main-content">
+
+    {# hero_slider.html을 여기에 포함시킵니다. exhibitions 데이터도 함께 전달합니다. #}
+    {% include 'css_test/main/hero_slider.html' with exhibitions=exhibitions %}
+
+    {# project_list 섹션은 이전에 수정했던 대로 유지됩니다. #}
+    <div class="fullwidth-block latest-projects-section">
+        <div class="container">
+            <h2 class="section-title">전시 정보 및 예약 페이지</h2>
+            <div class="row">
+                {# views.py에서 전달받은 'exhibitions' 데이터를 반복하여 각 카드 생성 #}
+                {% for exhibition in exhibitions %}
+                    {# project_card.html 템플릿을 재사용하여 각 전시 카드 생성 #}
+                    {% include 'css_test/main/project_card.html' with exhibition=exhibition %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

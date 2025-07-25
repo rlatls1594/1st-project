@@ -1,0 +1,32 @@
+{% load static %}
+
+<div class="col-sm-6 col-md-3"> {# 이 div는 project_list.html에서 for 루프 안에 들어가야 합니다. #}
+    <div class="project">
+        <figure class="project-thumbnail">
+            {# views.py에서 넘어온 exhibition 객체의 image_url 사용 #}
+            <img src="{% static exhibition.image_url %}" alt="{{ exhibition.title }}">
+        </figure>
+        <h3 class="project-title">
+            {# 상세 페이지 링크: css_test 앱의 exhibition_detail URL, exhibition_id 전달 #}
+            <a href="{% url 'css_test:exhibition_detail' exhibition_id=exhibition.id %}">{{ exhibition.title }}</a>
+        </h3>
+        {# views.py에서 넘어온 exhibition 객체의 date_range 사용 #}
+        <small class="project-subtitle">{{ exhibition.date_range }}</small>
+        {# views.py에서 넘어온 exhibition 객체의 description 사용 #}
+        <p>{{ exhibition.description }}</p>
+        
+        {# -------- 이 부분이 화살표 버튼입니다. 이 부분을 삭제하거나 주석 처리하세요. -------- #}
+        {% comment %}
+        <a href="{% url 'css_test:exhibition_detail' exhibition_id=exhibition.id %}" class="more-link">
+            <img src="{% static 'images/bread.png' %}" alt=""> 
+        </a>
+        {% endcomment %}
+        {# -------------------------------------------------------------------------- #}
+
+        {# 예약하기 / 상세정보 버튼은 유지합니다. #}
+        <div class="card-buttons" style="margin-top: 10px;">
+            <a href="{% url 'css_test:reserve' exhibition_id=exhibition.id %}" class="reserve-button">예약하기</a>
+            <a href="{% url 'css_test:exhibition_detail' exhibition_id=exhibition.id %}" class="detail-button">상세정보</a>
+        </div>
+    </div>
+</div>

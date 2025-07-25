@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>마이페이지</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <style>
+    .mypage-container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .mypage-container h2 {
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    .user-info {
+      margin-bottom: 30px;
+    }
+
+    .reservation-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .reservation-table th, .reservation-table td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    .reservation-table th {
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+  <div class="mypage-container">
+    <h2>마이페이지</h2>
+
+    <!-- 유저 정보 -->
+    <div class="user-info">
+      <p><strong>사용자명:</strong> {{ user.username }}</p>
+      <p><strong>이메일:</strong> {{ user.email }}</p>
+    </div>
+
+    <!-- 전시 예약 내역 -->
+    <h3>예약 내역</h3>
+    {% if reservations %}
+      <table class="reservation-table">
+        <thead>
+          <tr>
+            <th>예약 번호</th>
+            <th>전시 이름</th>
+            <th>예약일</th>
+            <th>인원수</th>
+            <th>결제 상태</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in reservations %}
+          <tr>
+            <td>{{ r.id }}</td>
+            <td>{{ r.exhibition_title }}</td>
+            <td>{{ r.date_reserved|date:"Y-m-d" }}</td>
+            <td>{{ r.num_people }}</td>
+            <td>{{ r.payment_status }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>예약된 내역이 없습니다.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

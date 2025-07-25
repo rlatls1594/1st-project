@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CDN URL -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  
+  <!-- Fontawesome URL -->
+  <script src="https://kit.fontawesome.com/53e4af2e34.js" crossorigin="anonymous"></script>
+  
+  <!-- pagination Style 변경 -->
+  <style>
+    .pagination > li > a
+    {
+      background-color: white;
+      color: #000;
+    }
+    .pagination > .active > a
+    {
+        color: white;
+        background-color: #212529 !Important;
+        border: solid 1px #212529 !Important;
+    }
+  </style>
+  <title>Django WEB</title>
+</head>
+
+<body>
+
+  <!-- Navbar 영역 -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white container my-3">
+    <div class="container">
+
+      <!-- Logo 영역 -->
+      <a class="mb-2 navbar-brand" href="#"><img src="./images/logo.png" width="70" height="40" alt=""> Python DJango</a>
+
+      <!-- 햄버거 메뉴 영역 (data-target : Menu ID)-->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar Content 영역 -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="me-2">
+            <a class="nav-link" href="#"><i class="fa-solid fa-user me-2"></i>로그인</a>
+          </li>
+          <li class="me-2">
+            <a class="nav-link" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>로그아웃</a>
+          </li>
+          <li>
+            <a class="nav-link" href="#"><i class="fa-solid fa-user-plus me-2"></i>회원가입</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+
+  <section class="signup-block">
+    <div class="container">
+      <div class="row">
+        <div class="card col-lg-4">
+          <div class="card-body">
+            <h1 class="text-center mt-2 mb-5">SIGNUP</h1>
+            <form method="POST" class="post-form">
+
+              <div class="input-group mb-4">
+                <input type="text" class="form-control" name="username" id="username" placeholder="ID" value="">
+              </div>
+              <div class="input-group mb-4">
+                <input type="password" class="form-control" name="password1" id="password1" placeholder="Password" value="">
+              </div>
+              <div class="input-group mb-4">
+                <input type="password" class="form-control" name="password2" id="password2" placeholder="Re-Entry Password" value="">
+              </div>
+              <div class="input-group mb-4">
+                <input type="email" class="form-control" name="email" id="email" placeholder="E-mail Address" value="">
+              </div>
+  
+              <div class="d-grid gap-1">
+                <button type="submit" class="btn btn-outline-dark mt-2">회원가입</button>
+                <button type="reset" class="btn btn-outline-dark mt-2">취소</button>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-muted text-center">
+            <i class="fs-2 mx-2 fa-brands fa-instagram-square"></i>
+            <i class="fs-2 mx-2 fa-brands fa-facebook-square"></i>
+            <i class="fs-2 mx-2 fa-brands fa-google"></i>
+            <i class="fs-2 mx-2 fa-brands fa-apple"></i>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card">
+            <img class="card-img-top" src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="...">
+          </div>
+        </div> 
+      </div>
+    </div>
+    </section>
+
+</body>
+</html>

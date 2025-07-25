@@ -1,0 +1,74 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+<script id="django-messages" type="application/json">
+  {% if messages %}
+    [
+      {% for message in messages %}
+        "{{ message|escapejs }}"{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ]
+  {% endif %}
+</script>
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const raw = document.getElementById("django-messages").textContent;
+    if (raw) {
+      const messages = JSON.parse(raw);
+      messages.forEach(msg => alert(msg));
+    }
+  });
+</script>
+
+
+<div class="container right-panel-active">
+  <!-- Sign Up -->
+  <div class="container__form container--signup">
+    <form method="post" action="{% url 'css_test:signup' %}" class="form">
+      {% csrf_token %}
+      <h2 class="form__title">Sign Up</h2>
+      <input type="text" name="username" placeholder="User" class="input" required />
+      <input type="email" name="email" placeholder="Email" class="input" required />
+      <input type="password" name="password" placeholder="Password" class="input" required />
+      <button class="btn">Sign Up</button>
+    </form>
+  </div>
+
+  <!-- Sign In -->
+  <div class="container__form container--signin">
+    <form method="post" action="{% url 'css_test:login' %}" class="form">
+      {% csrf_token %}
+      <!-- {{ form.as_p }} -->
+      <h2 class="form__title">Sign In</h2>
+      <input type="text" name="username" placeholder="Username" class="input" required />
+      <input type="password" name="password" placeholder="Password" class="input" required />
+      <button class="btn">Sign In</button>
+      
+    </form>
+  </div>
+
+  <!-- <form method="post" action="{% url 'css_test:login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">로그인</button>
+</form> -->
+
+  <!-- Overlay -->
+  <div class="container__overlay">
+    <div class="overlay">
+      <div class="overlay__panel overlay--left">
+        <button class="btn" id="signIn">Sign In</button>
+      </div>
+      <div class="overlay__panel overlay--right">
+        <button class="btn" id="signUp">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% load static %}
+<script src="{% static 'js/login.js' %}"></script>
+
+

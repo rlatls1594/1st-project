@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1" />
+
+    <title>{% block title %}문화공간{% endblock %}</title> {# 사이트 기본 타이틀 #}
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400" rel="stylesheet" />
+    <link href="{% static 'fonts/font-awesome.min.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    {# 404 에러가 나던 CSS 파일들을 여기에 추가합니다. (경로 수정 중요!) #}
+    {# 이 파일들이 모든 페이지에서 필요하다면 여기에, 특정 페이지에서만 필요하면 해당 페이지의 {% block header %} 에 넣으세요. #}
+    {# 일단은 콘솔에 에러가 나니 여기에 추가하고, 나중에 필요에 따라 옮기는 것을 권장합니다. #}
+    <!-- <link rel="stylesheet" href="{% static 'css/header_footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/button_nav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/review.css' %}"> -->
+    {# exhibition_detail.css는 exhibition_detail.html에서만 필요할 가능성이 높으니 일단 여기서는 제외합니다. #}
+
+    {% block extra_head_css %}{% endblock %} {# 각 페이지별 추가 CSS를 위한 블록 #}
+</head>
+
+<body>
+    {% include 'css_test/main/header.html' %}
+
+    <div id="site-content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 문화공간. All rights reserved.</p>
+    </footer>
+
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+
+    {% block extra_body_js %}{% endblock %} {# 각 페이지별 추가 JS를 위한 블록 #}
+</body>
+
+{% if messages %}
+<ul class="message-list">
+    {% for msg in messages %}
+    <li class="{{ msg.tags }}">{{ msg }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+</html>

@@ -1,0 +1,21 @@
+{% load static %}
+
+<div class="hero hero-slider">
+    <ul class="slides">
+        {# views.py에서 전달받은 'exhibitions' 데이터를 반복하여 각 슬라이드 생성 #}
+        {# 슬라이더는 보통 메인 전시 몇 개만 보여주므로, 필요하다면 슬라이드 개수를 제한할 수 있습니다. #}
+        {# 예를 들어, 처음 5개 전시만 슬라이더에 표시하려면 [:5] 사용 #}
+        {% for exhibition in exhibitions|slice:":5" %} {# 처음 5개만 가져오도록 제한. 모든 전시를 보여주려면 |slice:":5" 제거 #}
+            <li data-bg-image="{% static exhibition.image_url %}">
+                <div class="container">
+                    <div class="slide-title">
+                        <span>{{ exhibition.title }}</span> <br>
+                        <span>{{ exhibition.date_range }}</span>
+                    </div>
+                    {# 슬라이더 클릭 시 상세 페이지로 이동하도록 링크를 추가할 수도 있습니다 (선택 사항) #}
+                    {# <a href="{% url 'css_test:exhibition_detail' exhibition_id=exhibition.id %}" class="slide-link">상세보기</a> #}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div> 

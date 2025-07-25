@@ -1,0 +1,87 @@
+{# css_test/templates/css_test/Common/exhibition_detail.html #}
+{% extends 'css_test/main/base.html' %} {# base.html 상속받기 #}
+{% load static %}
+
+{% block title %}{{ exhibition.title }} 상세{% endblock %}
+
+{% block extra_head_css %} {# base.html의 extra_head_css 블록에 이 페이지 전용 CSS 추가 #}
+    {# 이 CSS들은 이 상세 페이지에만 고유하게 필요한 스타일이어야 합니다. #}
+    {# 만약 header_footer.css, button_nav.css, review.css가 모든 페이지에서 사용된다면 base.html에 두는 것이 맞습니다. #}
+    <link rel="stylesheet" href="{% static 'css/exhibition_detail.css' %}">
+{% endblock extra_head_css %}
+
+{% block content %}
+<main class="exhibition-detail-container">
+    <section class="exhibition-info">
+        <div class="image-box">
+            <img src="{% static exhibition.image_url %}" alt="{{ exhibition.title }}">
+        </div>
+        <div class="details-box">
+            <h1>{{ exhibition.title }}</h1>
+            <p><strong>기간:</strong> {{ exhibition.date_range }}</p>
+            <p><strong>장소:</strong> {{ exhibition.location }}</p>
+            <p><strong>아티스트:</strong> {{ exhibition.artist }}</p>
+            <p><strong>관람 시간:</strong> {{ exhibition.opening_hours }}</p>
+            <p><strong>요금:</strong> {{ exhibition.price_info }}</p>
+            <p><strong>문의:</strong> {{ exhibition.contact_phone }}</p>
+            <p><strong>주차:</strong> {{ exhibition.parking_info }}</p>
+            <p><strong>대중교통:</strong> {{ exhibition.public_transport }}</p>
+
+            <div class="description">
+                <h3>전시 소개</h3>
+                <p>{{ exhibition.description }}</p>
+            </div>
+            
+            <div class="schedule">
+                <h3>행사 일정</h3>
+                <ul>
+                    {% for item in exhibition.schedule_items %}
+                        <li>
+                            <strong>{{ item.category }}:</strong> {{ item.date }} {{ item.time }} ({{ item.notes }})
+                        </li>
+                    {% empty %}
+                        <li>등록된 행사 일정이 없습니다.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="action-buttons">
+                <a href="{% url 'css_test:reserve' exhibition.id %}" class="reserve-btn">예매하기</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="review-section">
+        <h2>관람객 리뷰</h2>
+        <div class="review-form">
+            <h3>리뷰 작성</h3>
+            <form action="{% url 'css_test:add_review' exhibition.id %}" method="post">
+                {% csrf_token %}
+                <div class="rating-input">
+                    <label for="rating">별점:</label>
+                    <select name="rating" id="rating">
+                        <option value="5">★★★★★</option>
+                        <option value="4">★★★★☆</option>
+                        <option value="3">★★★☆☆</option>
+                        <option value="2">★★☆☆☆</option>
+                        <option value="1">★☆☆☆☆</option>
+                    </select>
+                </div>
+                <textarea name="review_text" rows="5" placeholder="리뷰를 작성해주세요." required></textarea>
+                <button type="submit" class="submit-review-btn">리뷰 제출</button>
+            </form>
+        </div>
+        <div class="review-list">
+            {% for review in reviews %}
+            <div class="review-item">
+                <p class="review-author"><strong>{{ review.author }}</strong> ({{ review.rating }}점)</p>
+                <p class="review-text">{{ review.review_text }}</p>
+                <p class="review-date">{{ review.created_at }}</p>
+            </div>
+            {% empty %}
+            <p>아직 작성된 리뷰가 없습니다.</p>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock content %}

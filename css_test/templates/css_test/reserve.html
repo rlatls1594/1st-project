@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>전시 예약</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/booking.css' %}"> {# 경로 수정 필요 없을 수 있음, `settings.py` STATICFILES_DIRS 설정에 따라 #}
+  <style>
+    /* 이 예약 페이지에만 적용될 추가적인 CSS가 있다면 여기에 작성 */
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 25px;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+    h3 {
+      font-size: 1.5rem;
+      color: #555;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+    section {
+      margin-bottom: 30px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #444;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="tel"],
+    .form-group input[type="email"],
+    .form-group input[type="number"],
+    .form-group input[type="password"],
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
+      font-size: 1rem;
+      color: #333;
+    }
+    .form-group input[type="radio"] {
+      margin-right: 8px;
+    }
+    .form-group input[type="radio"] + label {
+      display: inline-block;
+      margin-right: 20px;
+      font-weight: normal;
+    }
+    .reserve-button { /* 새로 추가된 버튼 스타일 */
+      background-color: #FF5757;
+      color: white;
+      font-weight: bold;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 30px;
+    }
+    .reserve-button:hover {
+      background-color: #e44a4a;
+    }
+    label input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    label input[type="checkbox"] + span {
+      font-weight: normal;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>전시 예약</h1>
+
+    <section>
+      <div class="container">
+        <h1 style="font-size: 1.8rem; margin-top: 0; padding-top: 0;">예약 정보</h1>
+        <p><strong>전시명:</strong> {{ exhibition.title }}</p>
+        <p><strong>전시일정:</strong> {{ exhibition.date_range }}</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h1 style="font-size: 1.8rem; margin-top: 0; padding-top: 0;">예약자 정보</h1>
+        <form id="bookingForm" method="post" action="{% url 'css_test:reserve' exhibition_id=exhibition.id %}">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">핸드폰 번호</label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{10,11}" placeholder="01012345678" required>
+          </div>
+          <div class="form-group">
+            <label for="email">이메일 주소</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="tickets">구매 티켓 수</label>
+            <input type="number" id="tickets" name="tickets" min="1" value="1" required>
+          </div>
+          
+          <div class="form-group">
+            <label>티켓 수령 방법:</label>
+            <input type="radio" id="onsite_receive" name="receive_method" value="onsite" checked /> <label for="onsite_receive">현장 수령</label>
+          </div>
+
+          <div class="form-group">
+            <label>결제 방법:</label>
+            <input type="radio" id="onsite_payment" name="payment_method" value="onsite" checked /> <label for="onsite_payment">현장 결제</label>
+          </div>
+          
+          <div class="form-group">
+            <h3>할인 쿠폰</h3>
+            <input type="text" name="coupon" placeholder="쿠폰 코드 입력 (선택)" />
+          </div>
+
+          <div class="form-group">
+            <h3>약관 동의</h3>
+            <label>
+              <input type="checkbox" name="agree_terms" required />
+              <span>개인정보 수집 및 이용에 동의합니다.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="reserve-button">예약 완료하기</button>
+        </form>
+      </div>
+    </section>
+
+  </div>
+</body>
+
+</html>
